@@ -13,7 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Notes.init({
+  Notes.init({    
+    user_id: {
+    type: DataTypes.INTEGER,
+    },
     content: DataTypes.STRING,
     priority: DataTypes.INTEGER
   }, {

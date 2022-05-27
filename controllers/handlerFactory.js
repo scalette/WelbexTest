@@ -13,12 +13,13 @@ exports.getAll = (Model) => catchAsync(async (req, res) => {
 
 exports.createOne = (Model) => catchAsync(async (req, res) => {
     const entity = await Model.create(req.body);
-    res.status(201).json({
-        status: 'success',
-        data: {
-            entity
-        },
-        });
+    req.id = entity.id;
+        res.status(201).json({
+            status: 'success',
+            data: {
+                entity
+            },
+            });
 });
 
 exports.deleteOneById = (Model) => catchAsync(async (req, res, next) => {

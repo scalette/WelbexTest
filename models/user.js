@@ -1,4 +1,9 @@
+
+
+
 'use strict';
+
+const bcrypt = require('bcryptjs');
 const {
   Model
 } = require('sequelize');
@@ -19,9 +24,28 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
-    firstName: {
+    name: {
       type:  DataTypes.STRING,
       allowNull: false
+    },
+    password: {
+      type:  DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: {
+          args: [5, 10], 
+          msg: "Must be between 5 and 10 symbols"}
+      }
+    },
+    passwordConfirm: {
+      type:  DataTypes.STRING,
+      validate: {
+        customValidator(el) {
+          if(el !== this.password){
+            throw new Error("The passwordd must be equal");
+          }
+        },
+      },
     },
     email: {
       type:  DataTypes.STRING,
@@ -35,5 +59,14 @@ module.exports = (sequelize, DataTypes) => {
     // If you want to give a custom name to the deletedAt column
     // deletedAt: 'destroyTime'
   });
+
+  User.beforeCreate(async (user) => {
+    user.password = await bcrypt.hash(user.password, 12);
+    //delete the passwordConfirm field
+    user.passwordConfirm = undefined;
+  });
   return User;
+
+  
 };
+

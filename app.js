@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const compression = require('compression');
 const userRouter = require('./routs/userRoutes');
+const noteRouter = require('./routs/noteRoutes');
 
 const { sequelize } = require('./models')
 
@@ -28,5 +29,5 @@ app.use(cookieParser());
 
 
 app.use('/api/v1/users', userRouter);
-
+app.use('/api/v1/notes', noteRouter);
 module.exports = app;
