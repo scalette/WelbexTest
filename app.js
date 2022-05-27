@@ -1,7 +1,10 @@
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
 const app = express();
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 const compression = require('compression');
 const userRouter = require('./routs/userRoutes');
 const noteRouter = require('./routs/noteRoutes');
@@ -13,7 +16,7 @@ async function main(){
      await sequelize.sync({alter: true});
 }
 
-main();
+app.enable('trust proxy');
 //test middleware
 app.use((req,res,next) => {
     req.requestTime = new Date().toISOString();
@@ -26,7 +29,10 @@ app.use(compression());
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
-
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+// Data sanitization against XSS
+app.use(xss());
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/notes', noteRouter);

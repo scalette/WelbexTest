@@ -65,8 +65,13 @@ module.exports = (sequelize, DataTypes) => {
     //delete the passwordConfirm field
     user.passwordConfirm = undefined;
   });
-  return User;
-
+  User.correctPassword = async function (
+    candidatePassword,
+    userPassword
+  ) {
+    return await bcrypt.compare(candidatePassword, userPassword);
+  };
   
+  return User;
 };
 

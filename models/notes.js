@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Notes.init({    
     user_id: {
     type: DataTypes.INTEGER,
+    allowNull: false
     },
     content: DataTypes.STRING,
     priority: DataTypes.INTEGER
