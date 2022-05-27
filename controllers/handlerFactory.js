@@ -2,7 +2,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getAll = (Model) => catchAsync(async (req, res) => {
-    const heap  = await Model.findAll();
+    const heap  = await Model.findAll({where: { user_id: req.body.user_id }});
     res.status(200).json({
         status:'success',
         data: {

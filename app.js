@@ -17,6 +17,8 @@ async function main(){
 }
 
 app.enable('trust proxy');
+
+app.set('view engine', 'pug');
 //test middleware
 app.use((req,res,next) => {
     req.requestTime = new Date().toISOString();
