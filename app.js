@@ -5,7 +5,7 @@ const app = express();
 const compression = require('compression');
 const userRouter = require('./routs/userRoutes');
 
-const {sequelize} = require('./models')
+const { sequelize } = require('./models')
 
 
 async function main(){
