@@ -34,7 +34,7 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-    console.log('test');
+    // console.log('test');
     const newUser = await User.create({
       name: req.body.name,
       email: req.body.email,
@@ -44,6 +44,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     // const url = `${req.protocol}://${req.get('host')}/me`;
     const url = '<link to some page>';
     await new Email(newUser, url).sendWelcome();
+    // console.log(newUser, url)
     createSendToken(newUser, 201, res);
   });
 
@@ -98,19 +99,10 @@ exports.signup = catchAsync(async (req, res, next) => {
       );
     }
   
-    // 4) Check if user changed password after the token was issued
-    // if (currentUser.changedPasswordAfter(decoded.iat)) {
-    //   return next(
-    //     new AppError('User recently changed password! Please log in again.', 401)
-    //   );
-    // }
-  
     // GRANT ACCESS TO PROTECTED ROUTE
     req.user = currentUser;
     res.locals.user = currentUser;
-    console.log(req.body);
     req.body.user_id = currentUser.id;
-    console.log(req.body);
     next();
   });
   

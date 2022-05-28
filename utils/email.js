@@ -9,7 +9,6 @@ module.exports = class Email {
     this.url = url;
     this.from = `Boris!!!! <${process.env.EMAIL_FROM}>`;
   }
-
   // 1. Create a transporter
   newTransport() {
     if (process.env.NODE_ENV === 'production') {

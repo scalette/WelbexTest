@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const notesController = require('../controllers/notesController');
-const crossTableController = require('../controllers/crossController');
 const authController = require('../controllers/authController');
 
 router.use(authController.protect);

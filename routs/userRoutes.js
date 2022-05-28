@@ -9,7 +9,7 @@ router.route('/login').post(authController.login)
 router.use(authController.protect);
 router.route('/')
     .get(userController.getAllUsers)
-    .post(userController.createUser)
+    //.post(userController.createUser)
     .delete(userController.deleteUser)
     .patch(userController.updateUser);
 
